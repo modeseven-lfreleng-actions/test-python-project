@@ -1,0 +1,182 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2024 The Linux Foundation
+
+[project]
+name = "lfreleng-test-python-project"
+version = "0.0.1"
+# Uncomment to enable dynamic versioning
+# dynamic = [ "version" ]
+description = "Python project template"
+authors = [
+  { name = "Matthew Watkins", email = "93649628+ModeSevenIndustrialSolutions@users.noreply.github.com" },
+]
+requires-python = "<3.13,>=3.10"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+keywords = ["Example", "Python", "Test", "Testing"]
+classifiers = [
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Software Development",
+]
+
+dependencies = [
+    "typer",
+    "jupyterlab"
+]
+
+[project.urls]
+Homepage = "https://github.com/lfreleng-actions/test-python-project"
+Repository = "https://github.com/lfreleng-actions/test-python-project"
+Downloads = "https://github.com/lfreleng-actions/test-python-project/releases"
+"Bug Tracker" = "https://github.com/lfreleng-actions/test-python-project/issues"
+Documentation = "https://github.com/lfreleng-actions/test-python-project/tree/main/docs"
+"Source Code" = "https://github.com/lfreleng-actions/test-python-project"
+
+[project.scripts]
+lfreleng-test-python-project = "lfreleng-test-python-project.cli:run"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project.optional-dependencies]
+dev = [
+  "ruff",
+  "toml",
+  "pdm",
+  "tox",
+  "tox-pdm",
+]
+test = [
+    "pdm[pytest]",
+    "pytest",
+    "pytest-cov",
+    "pytest-html",
+]
+
+[tool.pdm.scripts]
+test = "pytest"
+tox = "tox"
+docs = { shell = "cd docs && mkdocs serve", help = "Start the dev server for doc preview" }
+lint = "pre-commit run --all-files"
+complete = { call = "tasks.complete:main", help = "Create autocomplete files for bash and fish" }
+
+[tool.pdm.dev-dependencies]
+tox = ["tox", "tox-pdm"]
+docs = ["sphinx", "sphinx-copybutton"]
+lint = ["pre-commit"]
+
+[tool.pytest.ini_options]
+testpaths = [
+  "tests/",
+]
+addopts = ["--cov", "--cov-report=html"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["test/*"]
+# relative_files = true
+
+[tool.coverage.report]
+# Note: Set low for this repository
+# Recommend setting a value > 90%
+fail_under = 25
+skip_empty = true
+ignore_errors = true
+show_missing = true
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "if self.debug:",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "pass",
+  "raise ImportError",
+]
+
+[tool.coverage.html]
+directory = "coverage_html_report"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.lint]
+extend-fixable = [
+    # Instead of trailing-whitespace
+    "W291", "W293"
+    ]
+
+extend-select = [
+    # Instead of pydocstyle
+    "D",
+    #Instead of flake8
+    "E", "F","B",
+    # Instead of pep8-naming
+    "N",
+    # Instead of flake8-debugger or debug-statements
+    "T10",
+]
+
+ignore = [
+    "E203",
+    "E501",
+    # Avoid incompatible rules
+    "D203",
+    "D213",
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+# Ignore `D` rules everywhere except for the `src/` directory.
+"!src/**.py" = ["D"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
