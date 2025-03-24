@@ -24,5 +24,21 @@ Contains a sample Python project implementing a CLI tool with [Typer](https://ty
 # The section below renders the badges displayed at the top of the page
 -->
 
+##  Notes
+
+Steps required to initialise pyproject.toml and create initial lock file:
+
+```console
+pdm init
+pdm add -dG test pytest
+pdm add -dG test coverage
+pdm add -dG tox tox-pdm tox
+pdm add -dG lint pre-commit
+pdm add -dG docs sphinx
+pdm add -dG docs sphinx-copybutton
+pdm build
+pdm install --dev
+```
+
 [pre-commit.ci results page]: https://results.pre-commit.ci/latest/github/lfreleng-actions/test-python-project/main
 [pre-commit.ci status badge]: https://results.pre-commit.ci/badge/github/lfreleng-actions/test-python-project/main.svg
