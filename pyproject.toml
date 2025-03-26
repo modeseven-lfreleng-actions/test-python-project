@@ -30,6 +30,9 @@ classifiers = [
   "Topic :: Software Development",
 ]
 
+[project.scripts]
+lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
