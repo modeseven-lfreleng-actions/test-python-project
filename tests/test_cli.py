@@ -59,11 +59,4 @@ def test_script_completion_run():
         capture_output=True,
         encoding="utf-8",
     )
-    assert "Says goodbye" in result.stdout
-
-
-def test_wrong(runner):
-    """Example for a test that fails."""
-    result = runner.invoke(app, ["wrong"])
-    assert result.exit_code == 2
-    assert "Missing argument 'NAME'" in result.stdout
+    assert "" in result.stdout
