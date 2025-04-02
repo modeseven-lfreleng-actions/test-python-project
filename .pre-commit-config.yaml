@@ -23,6 +23,7 @@ repos:
       - id: requirements-txt-fixer
       - id: mixed-line-ending
         args: ["--fix=lf"]
+      # May cause test failures when TOX used to run linting
       - id: no-commit-to-branch
         args:
           - --branch=dev

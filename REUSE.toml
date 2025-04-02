@@ -7,7 +7,8 @@ version = 1
 path = [
 	 "tests/dist/**",
 	 "img/favicon/**",
-	 "pdm.lock"
+	 "test_coverage_report*",
+         "pdm.lock"
 ]
 
 SPDX-License-Identifier = "Apache-2.0"
