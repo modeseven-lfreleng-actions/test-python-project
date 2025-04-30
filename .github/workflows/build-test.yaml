@@ -67,7 +67,7 @@ jobs:
     runs-on: "ubuntu-24.04"
     needs:
       - python-build
-    # Matrix job
+    # Matrix job
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.python-build.outputs.matrix_json) }}
@@ -103,7 +103,7 @@ jobs:
     runs-on: "ubuntu-24.04"
     needs:
       - python-build
-    # Matrix job
+    # Matrix job
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.python-build.outputs.matrix_json) }}
