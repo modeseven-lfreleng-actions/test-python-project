@@ -1,0 +1,33 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+ci:
+  autofix_commit_msg: 'Chore: pre-commit autoupdate'
+  autoupdate_commit_msg: 'Chore: pre-commit autoupdate'
+
+exclude: |
+  (?x)^(
+      docs\/conf.py|
+      dco-signoffs/$
+  )$
+
+repos:
+  - repo: 'local'
+    hooks:
+      # When the cache doesn't exist, it can result in spurious output
+      - id: 'mypy-cache'
+        name: 'Create MyPy cache'
+        language: system
+        pass_filenames: false
+        entry: bash -c 'if [ ! -d .mypy_cache ]; then mkdir .mypy_cache; fi'
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    # Manually managed version
+    rev: 'f40886d54c729f533f864ed6ce584e920feb0af7'  # frozen: v1.15.0
+    hooks:
+      - id: 'mypy'
+        name: 'Run MyPy'
+        verbose: true
+        args: ['--show-error-codes', '--install-types', '--non-interactive']
+        additional_dependencies: ['tpytest', 'types-requests']
