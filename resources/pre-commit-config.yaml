@@ -30,4 +30,4 @@ repos:
         name: 'Run MyPy'
         verbose: true
         args: ['--show-error-codes', '--install-types', '--non-interactive']
-        additional_dependencies: ['tpytest', 'types-requests']
+        additional_dependencies: ['pytest', 'types-requests']
