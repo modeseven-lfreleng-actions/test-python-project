@@ -36,9 +36,12 @@ lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-
 [tool.pdm]
 distribution = true
+
+# Required for dynamic versioning support
+[tool.pdm.version]
+source = "scm"
 
 [dependency-groups]
 test = [
