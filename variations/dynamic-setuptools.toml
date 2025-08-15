@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+[project]
+name = "lfreleng-test-python-project"
+dynamic = ["version"]  # DYNAMIC VERSIONING: managed by setuptools-scm
+description = "Sample Python project used for testing actions"
+authors = [
+    {name = "Matthew Watkins", email = "93649628+ModeSevenIndustrialSolutions@users.noreply.github.com"},
+]
+dependencies = ["typer>=0.15.2", "jupyterlab>=4.3.6"]
+requires-python = "<3.13,>=3.11"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+classifiers = [
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Office/Business :: Financial",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development",
+]
+
+[project.scripts]
+lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
+
+# Configure setuptools to find packages in the src/ directory
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# Convert former PDM dependency-groups to PEP 621 optional dependencies ("extras")
+[project.optional-dependencies]
+test = [
+    "pytest>=8.3.5",
+    "coverage>=7.7.1",
+]
+tox = [
+    "tox>=4.24.2",
+    "tox-pdm>=0.7.2",
+]
+lint = [
+    "pre-commit>=4.2.0",
+]
+docs = [
+    "sphinx>=8.2.3",
+    "sphinx-copybutton>=0.5.2",
+]
+
+[build-system]
+# Use setuptools as the build backend
+requires = [
+  "setuptools>=68",
+  "setuptools-scm>=8",
+]
+build-backend = "setuptools.build_meta"
+
+# Required for dynamic versioning support
+[tool.setuptools_scm]
+# Write the computed version into the package at build time (optional but handy)
+write_to = "src/lfreleng_test_python_project/_version.py"

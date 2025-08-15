@@ -3,7 +3,7 @@
 
 [project]
 name = "lfreleng-test-python-project"
-dynamic = ["version"]
+dynamic = ["version"]  # DYNAMIC VERSIONING: managed by pdm
 description = "Sample Python project used for testing actions"
 authors = [
     {name = "Matthew Watkins", email = "93649628+ModeSevenIndustrialSolutions@users.noreply.github.com"},
@@ -32,17 +32,6 @@ classifiers = [
 [project.scripts]
 lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
-[tool.pdm]
-distribution = true
-
-# Required for dynamic versioning support
-[tool.pdm.version]
-source = "scm"
-
 [dependency-groups]
 test = [
     "pytest>=8.3.5",
@@ -59,3 +48,20 @@ docs = [
     "sphinx>=8.2.3",
     "sphinx-copybutton>=0.5.2",
 ]
+
+[build-system]
+# Use pdm as the build backend
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+# Required for dynamic versioning support
+[tool.pdm.version]
+source = "scm"
+# Write the computed version into the package at build time
+The write_to path is inconsistent with the other configurations. It should be "src/lfreleng_test_python_project/_version.py" to match the setuptools and poetry configurations, since the package is located in the src/ directory.
+Suggested change
+write_to = "src/lfreleng_test_python_project/_version.py"
+write_template = "__version__ = '{}'"

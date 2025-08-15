@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+[tool.poetry]
+name = "lfreleng-test-python-project"
+version = "0.0.0"  # DYNAMIC VERSIONING: managed by poetry-dynamic-versioning
+description = "Sample Python project used for testing actions"
+authors = ["Matthew Watkins <93649628+ModeSevenIndustrialSolutions@users.noreply.github.com>"]
+readme = "README.md"
+license = "Apache-2.0"
+classifiers = [
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Office/Business :: Financial",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development",
+]
+
+# Configure Poetry to discover packages in the src/ directory
+packages = [{ include = "lfreleng_test_python_project", from = "src" }]
+
+[tool.poetry.scripts]
+lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.11"
+typer = ">=0.15.2"
+jupyterlab = ">=4.3.6"
+
+# Optional dependencies declared here can be grouped into extras below
+pytest = { version = ">=8.3.5", optional = true }
+coverage = { version = ">=7.7.1", optional = true }
+tox = { version = ">=4.24.2", optional = true }
+tox-pdm = { version = ">=0.7.2", optional = true }
+pre-commit = { version = ">=4.2.0", optional = true }
+sphinx = { version = ">=8.2.3", optional = true }
+"sphinx-copybutton" = { version = ">=0.5.2", optional = true }
+
+# Convert former dependency groups to Poetry extras
+[tool.poetry.extras]
+test = ["pytest", "coverage"]
+tox = ["tox", "tox-pdm"]
+lint = ["pre-commit"]
+docs = ["sphinx", "sphinx-copybutton"]
+
+[build-system]
+# Use Poetry as the build backend.
+requires = [
+  "poetry-core>=1.9.0",
+  "poetry-dynamic-versioning[plugin]>=1.4.0",
+]
+build-backend = "poetry.core.masonry.api"
+
+# Required for dynamic versioning support
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "pep440"
+# Write the computed version into the package at build time
+write_to = "src/lfreleng_test_python_project/_version.py"
