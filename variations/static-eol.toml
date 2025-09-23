@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+# Contains EOL Python versions for actions testing
+
+[project]
+name = "lfreleng-test-python-project"
+version = "0.0.1"
+description = "Sample Python project used for testing actions"
+authors = [
+    {name = "Matthew Watkins", email = "93649628+ModeSevenIndustrialSolutions@users.noreply.github.com"},
+]
+dependencies = ["typer>=0.15.2", "jupyterlab>=4.3.6"]
+readme = "README.md"
+license = {text = "Apache-2.0"}
+# Python 3.8 is EOL; used for testing downstream action/validation
+requires-python = "<3.13,>=3.8"
+classifiers = [
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Office/Business :: Financial",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development",
+]
+
+[project.scripts]
+lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
+
+[dependency-groups]
+test = [
+    "pytest>=8.3.5",
+    "coverage>=7.7.1",
+]
+tox = [
+    "tox>=4.24.2",
+    "tox-pdm>=0.7.2",
+]
+lint = [
+    "pre-commit>=4.2.0",
+]
+docs = [
+    "sphinx>=8.2.3",
+    "sphinx-copybutton>=0.5.2",
+]
