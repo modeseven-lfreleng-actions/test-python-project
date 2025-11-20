@@ -48,7 +48,7 @@ jobs:
       - name: "Build Python project [tox]"
         id: python-tox-build
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/python-build-action@03a07d633766b8b26eeb12ef8b43cea43114dd69 # v0.1.21
+        uses: lfreleng-actions/python-build-action@3552106f5c8bfedebe4c38116abf3b9c289359ea # v0.1.22
         with:
           tag: "v1.0.0dev1"
           tox_build: 'true'
@@ -57,7 +57,7 @@ jobs:
       - name: "Build Python project [python -m build]"
         id: python-build
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/python-build-action@03a07d633766b8b26eeb12ef8b43cea43114dd69 # v0.1.21
+        uses: lfreleng-actions/python-build-action@3552106f5c8bfedebe4c38116abf3b9c289359ea # v0.1.22
         with:
           tag: "v1.0.0dev1"
           purge_artefact_path: 'true'
