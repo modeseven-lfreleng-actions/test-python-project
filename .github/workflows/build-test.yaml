@@ -81,6 +81,28 @@ jobs:
           tox_build: 'true'
           artefact_upload: 'false'
 
+      - name: "Debug: Show pyproject.toml version after first build"
+        shell: bash
+        run: |
+          echo "=== Checking pyproject.toml version field after first build ==="
+          if [ -f pyproject.toml ]; then
+            grep -E "^version\s*=" pyproject.toml || \
+              echo "No version field found"
+            echo ""
+            echo "=== Checking for unquoted version (corruption indicator) ==="
+            if grep -E "^version\s*=\s*[^\"']" pyproject.toml; then
+              echo "⚠️  WARNING: Version appears to be unquoted (invalid TOML)"
+            else
+              echo "✓ Version appears to be properly quoted"
+            fi
+          else
+            echo "pyproject.toml not found"
+          fi
+
+      # Checkout again to get fresh state for second build
+      # (first build may have modified pyproject.toml)
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
       - name: "Build Python project [python -m build]"
         id: python-build
         # yamllint disable-line rule:line-length
