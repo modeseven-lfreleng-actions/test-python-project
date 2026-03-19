@@ -31,16 +31,24 @@ Contains a sample Python project implementing a CLI tool with [Typer](https://ty
 Steps required to initialise pyproject.toml and create initial lock file:
 
 ```console
-pdm init
-pdm add -dG test pytest
-pdm add -dG test coverage
-pdm add -dG tox tox-pdm tox
-pdm add -dG lint pre-commit
-pdm add -dG docs sphinx
-pdm add -dG docs sphinx-copybutton
-pdm build
-pdm install --dev
+uv add --group test pytest
+uv add --group test coverage
+uv add --group tox tox-uv tox
+uv add --group lint pre-commit
+uv add --group docs sphinx
+uv add --group docs sphinx-copybutton
+uv build
+uv sync --all-groups
 ```
+
+### Dependency management
+
+- **Update dependencies**: Use `uv lock --upgrade`
+  to rebuild and update the `uv.lock` file
+- **Add new dependencies**: Add to `pyproject.toml`
+  then run `uv lock` to update the lock file
+- **Install from lock file**: `uv pip install --system .`
+  will use the exact versions from `uv.lock`
 
 [pre-commit.ci results page]: https://results.pre-commit.ci/latest/github/lfreleng-actions/test-python-project/main
 [pre-commit.ci status badge]: https://results.pre-commit.ci/badge/github/lfreleng-actions/test-python-project/main.svg

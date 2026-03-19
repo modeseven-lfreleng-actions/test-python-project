@@ -40,21 +40,34 @@ classifiers = [
 lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
 
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0+dev"
 
-[tool.pdm]
-distribution = true
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lfreleng_test_python_project"]
+
+[tool.uv]
+managed = true
 
 [dependency-groups]
+dev = [
+    "hatch-vcs>=0.5.0",
+    "hatchling>=1.28.0",
+]
 test = [
     "pytest>=8.3.5",
     "coverage>=7.7.1",
 ]
 tox = [
     "tox>=4.24.2",
-    "tox-pdm>=0.7.2",
+    "tox-uv>=1.25.0",
 ]
 lint = [
     "pre-commit>=4.2.0",
