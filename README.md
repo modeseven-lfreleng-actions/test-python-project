@@ -26,7 +26,7 @@ Contains a sample Python project implementing a CLI tool with [Typer](https://ty
 # The section below renders the badges displayed at the top of the page
 -->
 
-##  Notes
+## Notes
 
 Steps to add dependency groups and generate the lock file:
 
