@@ -26,9 +26,9 @@ Contains a sample Python project implementing a CLI tool with [Typer](https://ty
 # The section below renders the badges displayed at the top of the page
 -->
 
-##  Notes
+##  Notes
 
-Steps required to initialise pyproject.toml and create initial lock file:
+Steps to add dependency groups and generate the lock file:
 
 ```console
 uv add --group test pytest
@@ -39,6 +39,7 @@ uv add --group docs sphinx
 uv add --group docs sphinx-copybutton
 uv build
 uv sync --all-groups
+uv lock
 ```
 
 ### Dependency management
@@ -47,8 +48,8 @@ uv sync --all-groups
   to rebuild and update the `uv.lock` file
 - **Add new dependencies**: Add to `pyproject.toml`
   then run `uv lock` to update the lock file
-- **Install from lock file**: `uv pip install --system .`
-  will use the exact versions from `uv.lock`
+- **Install from lock file**: `uv sync --locked`
+  will install the exact versions from `uv.lock`
 
 [pre-commit.ci results page]: https://results.pre-commit.ci/latest/github/lfreleng-actions/test-python-project/main
 [pre-commit.ci status badge]: https://results.pre-commit.ci/badge/github/lfreleng-actions/test-python-project/main.svg

@@ -40,15 +40,8 @@ classifiers = [
 lfreleng-test-python-project = "lfreleng_test_python_project.cli:run"
 
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.hatch.version]
-source = "vcs"
-fallback-version = "0.0.0+dev"
-
-[tool.hatch.version.raw-options]
-local_scheme = "no-local-version"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/lfreleng_test_python_project"]
@@ -58,7 +51,6 @@ managed = true
 
 [dependency-groups]
 dev = [
-    "hatch-vcs>=0.5.0",
     "hatchling>=1.28.0",
 ]
 test = [
