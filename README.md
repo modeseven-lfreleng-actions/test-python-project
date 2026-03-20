@@ -38,8 +38,8 @@ uv add --group lint pre-commit
 uv add --group docs sphinx
 uv add --group docs sphinx-copybutton
 uv build
-uv sync --all-groups
 uv lock
+uv sync --all-groups --locked
 ```
 
 ### Dependency management
