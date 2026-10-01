@@ -136,6 +136,10 @@ ignore_missing_imports = true
 [tool.ruff]
 target-version = "py311"
 line-length = 88
+# Fixture data rather than code to lint: tests_fail/ fails by design
+# for python-test-action, and tests/resources/ holds sample files.
+# The pre-commit hooks pass --force-exclude, so this applies there too.
+extend-exclude = ["tests_fail", "tests/resources"]
 
 [tool.ruff.lint]
 select = [

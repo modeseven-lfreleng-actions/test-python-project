@@ -49,15 +49,18 @@ repos:
     rev: a56c0b927e6465d37cae3e97d35d4d18ab2b96cd  # frozen: v0.16.9
     hooks:
       - id: ruff
-        files: ^(scripts|tests|custom_components)/.+\.py$
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
-        files: ^(scripts|tests|custom_components)/.+\.py$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: 7ff8d35ae36a7d2b968f2f90b4c723e292e594ee  # frozen: v2.3.1
     hooks:
       - id: mypy
+        # Fixture data, not code: tests_fail/ fails by design for
+        # python-test-action, and tests/resources/ holds sample files.
+        # Set here because mypy's own exclude ignores the filenames
+        # pre-commit passes; ruff reads [tool.ruff] extend-exclude.
+        exclude: ^(tests_fail|tests/resources)/
 
   - repo: https://github.com/btford/write-good
     rev: ab66ce10136dfad5146e69e70f82a3efac8842c1 # frozen: v1.0.8
