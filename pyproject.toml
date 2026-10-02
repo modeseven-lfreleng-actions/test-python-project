@@ -34,7 +34,7 @@ classifiers = [
   "Topic :: Software Development",
 ]
 dependencies = [
-  "typer>=0.15.2",
+  "typer>=0.16.0",
   # Note: jupyterlab commented out due to CVE-2025-53000 in nbconvert dependency
   # Uncomment if notebook testing is needed (check for security fixes first)
   # "jupyterlab>=4.3.6",
