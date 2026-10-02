@@ -49,15 +49,18 @@ repos:
     rev: a56c0b927e6465d37cae3e97d35d4d18ab2b96cd  # frozen: v0.16.9
     hooks:
       - id: ruff
-        files: ^(scripts|tests|custom_components)/.+\.py$
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
-        files: ^(scripts|tests|custom_components)/.+\.py$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: 7ff8d35ae36a7d2b968f2f90b4c723e292e594ee  # frozen: v2.3.1
     hooks:
       - id: mypy
+        # Fixture data, not code: tests_fail/ fails by design for
+        # python-test-action, and tests/resources/ holds sample files.
+        # Set here because mypy's own exclude ignores the filenames
+        # pre-commit passes; ruff reads [tool.ruff] extend-exclude.
+        exclude: ^(tests_fail|tests/resources)/
 
   - repo: https://github.com/btford/write-good
     rev: ab66ce10136dfad5146e69e70f82a3efac8842c1 # frozen: v1.0.8
@@ -94,6 +97,27 @@ repos:
     hooks:
       - id: codespell
         args: ["--ignore-words=.codespell"]
+
+  # Requires a mirror, primary repo lacks .pre-commit-hooks.yaml
+  - repo: https://github.com/DetachHead/basedpyright-prek-mirror
+    rev: 706e6acebe9e88c2c28d1527d3085a14b11794c4  # frozen: 1.40.1
+    hooks:
+      - id: basedpyright
+        # --warnings fails on warnings as well as errors, so nothing an
+        # editor shows can pass here. Explicit directories with filename
+        # passing disabled keep the scope whole when few files are
+        # staged; they match [tool.basedpyright] include.
+        #
+        # No additional_dependencies, deliberately. The bare hook sits
+        # just under pre-commit.ci's 250MiB tier; adding typer or pytest
+        # takes it over, as python-test-action found (262.4MiB, refused).
+        # A ci.skip cannot stand in: standalone-linting-action tests
+        # that this fixture has none. pyproject.toml explains the
+        # matching reportMissingImports setting.
+        pass_filenames: false
+        always_run: true  # Runs with no Python staged: config, deletions
+        stages: [pre-commit]  # Else always_run also runs it at commit-msg
+        args: [--warnings, src, tests]
 
   - repo: https://github.com/python-jsonschema/check-jsonschema.git
     rev: 4f85d46a92dc17713078e5de73f8a13190edf6fc  # frozen: 0.38.2

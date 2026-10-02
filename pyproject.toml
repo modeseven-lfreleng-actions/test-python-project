@@ -133,9 +133,40 @@ warn_unused_configs = true
 disallow_untyped_defs = false
 ignore_missing_imports = true
 
+[tool.basedpyright]
+# The minimum interpreter, from requires-python above
+pythonVersion = "3.11"
+pythonPlatform = "All"
+typeCheckingMode = "standard"
+# Scope a bare basedpyright run, and the editor's language server, to
+# the code pytest and the package use. The pre-commit hook passes the
+# same directories explicitly, with filename passing disabled, because
+# explicit arguments override include.
+include = ["src", "tests"]
+exclude = [
+  # Generated at build time by hatch-vcs
+  "src/lfreleng_test_python_project/_version.py",
+  # Sample files, not tests: pytest never collects them
+  "tests/resources",
+  # Fails by design for python-test-action. Outside include already;
+  # listed so that widening include cannot pull it in.
+  "tests_fail",
+]
+# The src layout: lets tests resolve the package without installing it
+extraPaths = ["src"]
+# The hook has no third-party packages to resolve against: adding them
+# breaks pre-commit.ci's size limit (see .pre-commit-config.yaml), and
+# _version.py exists only after a build. An editor using the project
+# venv resolves every import, and reports nothing with this enabled.
+reportMissingImports = false
+
 [tool.ruff]
 target-version = "py311"
 line-length = 88
+# Fixture data rather than code to lint: tests_fail/ fails by design
+# for python-test-action, and tests/resources/ holds sample files.
+# The pre-commit hooks pass --force-exclude, so this applies there too.
+extend-exclude = ["tests_fail", "tests/resources"]
 
 [tool.ruff.lint]
 select = [

@@ -7,18 +7,26 @@ import os
 import subprocess
 import sys
 
+from typer.testing import Result
+
 from lfreleng_test_python_project.cli import app
 
 
+def assert_no_internal_error(result: Result) -> None:
+    """Fail if the command ended in an exception other than a clean exit.
+
+    CliRunner.invoke catches exceptions, so an internal error would
+    otherwise pass silently. Usage errors end in SystemExit; the exit
+    code they carry differs across the supported typer versions, so it
+    is not asserted here.
+    """
+    if result.exception is not None:
+        assert isinstance(result.exception, SystemExit), repr(result.exception)
+
+
 def test_help_empty(runner):
-    try:
-        result = runner.invoke(app, [])
-    except TypeError:
-        assert result.exit_code == 1
-        assert (
-            "Parameter.make_metavar() missing 1 required positional argument: 'ctx'"
-            in result.stderr
-        )
+    """No arguments must not end in an internal error."""
+    assert_no_internal_error(runner.invoke(app, []))
 
 
 def test_hello(runner):
@@ -35,14 +43,8 @@ def test_dinosaur(runner):
 
 
 def test_hello_empty(runner):
-    try:
-        result = runner.invoke(app, ["goodbye"])
-    except TypeError:
-        assert result.exit_code == 2
-        assert (
-            "TyperArgument.make_metavar() takes 1 positional argument but 2 were given"
-            in result.stderr
-        )
+    """A missing NAME must not end in an internal error."""
+    assert_no_internal_error(runner.invoke(app, ["hello"]))
 
 
 def test_goodbye(runner):
@@ -58,14 +60,8 @@ def test_goodbye_formal(runner):
 
 
 def test_goodbye_empty(runner):
-    try:
-        result = runner.invoke(app, ["goodbye"])
-    except TypeError:
-        assert result.exit_code == 2
-        assert (
-            "TyperArgument.make_metavar() takes 1 positional argument but 2 were given"
-            in result.stderr
-        )
+    """A missing NAME must not end in an internal error."""
+    assert_no_internal_error(runner.invoke(app, ["goodbye"]))
 
 
 def test_script_completion_run():
